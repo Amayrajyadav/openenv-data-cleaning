@@ -1,0 +1,24 @@
+name: data-cleaning-env
+description: Environment for cleaning messy datasets
+
+version: 1.0
+
+observation_space:
+  type: object
+  properties:
+    dataset:
+      type: array
+
+action_space:
+  type: object
+  properties:
+    cleaned_data:
+      type: array
+
+reward:
+  type: float
+
+tasks:
+  - easy
+  - medium
+  - hard

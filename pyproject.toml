@@ -1,0 +1,21 @@
+[project]
+name = "openenv-data-cleaning"
+version = "0.1.0"
+description = "Data Cleaning OpenEnv Environment"
+authors = [
+    { name = "Your Name" }
+]
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openai",
+    "openenv-core"
+]
+
+[project.scripts]
+server = "server.app:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
