@@ -11,18 +11,15 @@ def reset():
 
 @app.post("/step")
 def step(action: dict):
-    obs, reward, done, info = env.step(action)
-    return {
-        "observation": obs,
-        "reward": reward,
-        "done": done,
-        "info": info
-    }
+    # Ensure task exists
+    if env.current_task is None:
+        env.reset()
 
-# ✅ REQUIRED for OpenEnv
+    result = env.step(action)
+    return result
+
 def main():
     uvicorn.run("server.app:app", host="0.0.0.0", port=7860)
 
-# ✅ REQUIRED ENTRYPOINT
 if __name__ == "__main__":
     main()

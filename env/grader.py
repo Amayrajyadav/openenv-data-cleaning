@@ -1,24 +1,30 @@
-def grade(pred, gt):
-    total_score = 0
+class Grader:
+    def grade(self, output, expected):
+        if not output or not expected:
+            return 0.0
 
-    for p, g in zip(pred, gt):
-        score = 0
+        score = 0.0
+        total = 0
 
-        # name
-        if str(p.get("name", "")).strip().lower() == g["name"].lower():
-            score += 0.3
+        for o, e in zip(output, expected):
+            row_score = 0.0
 
-        # age
-        try:
-            if int(p.get("age")) == int(g["age"]):
-                score += 0.3
-        except:
-            pass
+            # Name check
+            if o.get("name") == e.get("name"):
+                row_score += 0.33
 
-        # email
-        if p.get("email") == g["email"]:
-            score += 0.4
+            # Age check
+            try:
+                if int(o.get("age")) == int(e.get("age")):
+                    row_score += 0.33
+            except:
+                pass
 
-        total_score += score
+            # Email check
+            if o.get("email") == e.get("email"):
+                row_score += 0.34
 
-    return total_score / len(gt)
+            score += row_score
+            total += 1
+
+        return round(score / total, 2)
