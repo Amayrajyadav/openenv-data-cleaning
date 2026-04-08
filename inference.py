@@ -55,6 +55,8 @@ def run():
 
     print(f"[END] success=true steps=3 score={avg_score:.2f} rewards={','.join(total_rewards)}")
 
-
 if __name__ == "__main__":
-    run()
+    try:
+        run()
+    except Exception as e:
+        print(f"[END] success=false steps=0 score=0.00 rewards= error={str(e)}")
