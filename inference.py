@@ -1,7 +1,7 @@
 import os
 import requests
 
-API_BASE_URL = os.getenv("API_BASE_URL",https://huggingface.co/spaces/AmayRaj/data-cleaning-openenv)
+API_BASE_URL = os.getenv("API_BASE_URL", "https://amayraj-data-cleaning-openenv.hf.space")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
