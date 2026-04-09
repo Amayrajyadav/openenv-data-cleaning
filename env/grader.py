@@ -31,10 +31,10 @@ class Grader:
                 return 0.01
             
             final_score = round(score / total, 2)
+                
+            if final_score <= 0:
+                final_score = 0.01
+            elif final_score >= 1:
+                final_score = 0.99
             
-        if final_score <= 0:
-            final_score = 0.01
-        elif final_score >= 1:
-            final_score = 0.99
-        
-        return final_score
+            return final_score
