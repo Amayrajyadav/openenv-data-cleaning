@@ -4,7 +4,6 @@ from env.grader import Grader
 
 
 class DataCleaningEnv:
-
     def __init__(self):
         self.tasks = TASKS
         self.current_task = None
@@ -12,7 +11,6 @@ class DataCleaningEnv:
 
     def reset(self):
         self.current_task = random.choice(self.tasks)
-
         return {
             "dataset": self.current_task["input"]
         }
@@ -23,7 +21,6 @@ class DataCleaningEnv:
 
         cleaned_data = action.get("cleaned_data", [])
         expected = self.current_task["output"]
-
         reward = self.grader.grade(cleaned_data, expected)
 
         return {
@@ -32,7 +29,5 @@ class DataCleaningEnv:
             },
             "reward": reward,
             "done": True,
-            "info": {
-                "expected": expected  # DEBUG (optional)
-            }
+            "info": {}
         }
