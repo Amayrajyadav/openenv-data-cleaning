@@ -1,11 +1,10 @@
 class Grader:
     def grade(self, output, expected):
-        # 🔥 Handle empty cases (validator WILL test this)
         if not isinstance(output, list) or not isinstance(expected, list):
-            return 0.1
+            return 0.15
 
         if len(output) == 0 or len(expected) == 0:
-            return 0.1
+            return 0.15
 
         score = 0.0
         total = 0
@@ -13,36 +12,36 @@ class Grader:
         for o, e in zip(output, expected):
             row_score = 0.0
 
-            # Name
-            if o.get("name") == e.get("name"):
+            # Name check — title case, stripped
+            o_name = str(o.get("name", "")).strip().title()
+            e_name = str(e.get("name", "")).strip().title()
+            if o_name == e_name:
                 row_score += 0.33
 
-            # Age
+            # Age check — convert both to int safely
             try:
-                if int(o.get("age")) == int(e.get("age")):
+                o_age = int(str(o.get("age", "")).strip())
+                e_age = int(e.get("age"))
+                if o_age == e_age:
                     row_score += 0.33
-            except:
+            except (ValueError, TypeError):
                 pass
 
-            # Email
-            if o.get("email") == e.get("email"):
+            # Email check — lowercase, stripped
+            o_email = str(o.get("email", "")).strip().lower()
+            e_email = str(e.get("email", "")).strip().lower()
+            if o_email == e_email:
                 row_score += 0.34
 
             score += row_score
             total += 1
 
         if total == 0:
-            return 0.1
+            return 0.15
 
         raw_score = score / total
 
-        # 🔥 HARD SAFETY: NEVER allow 0 or 1
-        if raw_score <= 0:
-            return 0.1
-        if raw_score >= 1:
-            return 0.9
-
-        # 🔥 Smooth into safe range
+        # Always strictly between 0 and 1 — never exactly 0.0 or 1.0
         final_score = 0.1 + (0.8 * raw_score)
-
-        return round(final_score, 2)
+        final_score = max(0.11, min(0.89, round(final_score, 4)))
+        return final_score
