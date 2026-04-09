@@ -22,7 +22,7 @@ class DataCleaningEnv:
             self.reset()
 
         cleaned_data = action.get("cleaned_data", [])
-        expected = self.current_task["expected_output"]
+        expected = self.current_task["output"]
 
         reward = self.grader.grade(cleaned_data, expected)
 
