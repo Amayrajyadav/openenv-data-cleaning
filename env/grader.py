@@ -26,10 +26,12 @@ class Grader:
 
             score += row_score
             total += 1
-
-        final_score = round(score / total, 2)
-
-        # clamp to (0,1)
+    
+            if total == 0:
+                return 0.01
+            
+            final_score = round(score / total, 2)
+            
         if final_score <= 0:
             final_score = 0.01
         elif final_score >= 1:
