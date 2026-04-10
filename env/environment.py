@@ -11,9 +11,7 @@ class DataCleaningEnv:
 
     def reset(self):
         self.current_task = random.choice(self.tasks)
-        return {
-            "dataset": self.current_task["input"]
-        }
+        return {"dataset": self.current_task["input"]}
 
     def step(self, action):
         if self.current_task is None:
@@ -24,9 +22,7 @@ class DataCleaningEnv:
         reward = self.grader.grade(cleaned_data, expected)
 
         return {
-            "observation": {
-                "dataset": cleaned_data
-            },
+            "observation": {"dataset": cleaned_data},
             "reward": reward,
             "done": True,
             "info": {}
