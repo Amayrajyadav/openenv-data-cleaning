@@ -16,8 +16,8 @@ action_space:
 
 reward:
   type: float
-  min: 0.1
-  max: 0.9
+  min: 0.11
+  max: 0.89
 
 tasks:
   - name: easy
