@@ -2,7 +2,6 @@ class Grader:
     def grade(self, output, expected):
         if not isinstance(output, list) or not isinstance(expected, list):
             return 0.15
-
         if len(output) == 0 or len(expected) == 0:
             return 0.15
 
@@ -12,13 +11,11 @@ class Grader:
         for o, e in zip(output, expected):
             row_score = 0.0
 
-            # Name check — title case, stripped
             o_name = str(o.get("name", "")).strip().title()
             e_name = str(e.get("name", "")).strip().title()
             if o_name == e_name:
                 row_score += 0.33
 
-            # Age check — convert both to int safely
             try:
                 o_age = int(str(o.get("age", "")).strip())
                 e_age = int(e.get("age"))
@@ -27,7 +24,6 @@ class Grader:
             except (ValueError, TypeError):
                 pass
 
-            # Email check — lowercase, stripped
             o_email = str(o.get("email", "")).strip().lower()
             e_email = str(e.get("email", "")).strip().lower()
             if o_email == e_email:
@@ -40,8 +36,6 @@ class Grader:
             return 0.15
 
         raw_score = score / total
-
-        # Always strictly between 0 and 1 — never exactly 0.0 or 1.0
         final_score = 0.1 + (0.8 * raw_score)
         final_score = max(0.11, min(0.89, round(final_score, 4)))
         return final_score
