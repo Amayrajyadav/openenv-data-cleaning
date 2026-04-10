@@ -8,13 +8,11 @@ env = DataCleaningEnv()
 grader = Grader()
 
 
-# ✅ REQUIRED: Health check
 @app.get("/health")
 def health():
     return {"status": "healthy", "service": "data-cleaning-env"}
 
 
-# ✅ REQUIRED: Tasks listing — this is what the validator calls to find graders
 @app.get("/tasks")
 def get_tasks():
     return {
@@ -22,7 +20,7 @@ def get_tasks():
             {
                 "task_id": "easy",
                 "name": "Easy Data Cleaning",
-                "description": "Fix capitalization and basic formatting",
+                "description": "Fix name capitalization and basic formatting",
                 "difficulty": "easy",
                 "has_grader": True
             },
@@ -36,7 +34,7 @@ def get_tasks():
             {
                 "task_id": "hard",
                 "name": "Hard Data Cleaning",
-                "description": "Fix complex formatting, word-form ages, broken emails",
+                "description": "Fix complex names, word-form ages, broken emails",
                 "difficulty": "hard",
                 "has_grader": True
             }
@@ -54,13 +52,11 @@ def get_tasks():
     }
 
 
-# ✅ REQUIRED: Grader endpoint — validator calls this to test scores
 @app.post("/grader")
 def grade(payload: dict):
     task_id = payload.get("task_id", "easy")
     cleaned_data = payload.get("cleaned_data", [])
 
-    # Find the task by name
     task = None
     for t in env.tasks:
         if t["name"] == task_id:
@@ -68,10 +64,9 @@ def grade(payload: dict):
             break
 
     if task is None:
-        return {"reward": 0.15, "error": f"Unknown task_id: {task_id}"}
+        return {"reward": 0.15, "task_id": task_id, "error": f"Unknown task: {task_id}"}
 
-    expected = task["output"]
-    reward = grader.grade(cleaned_data, expected)
+    reward = grader.grade(cleaned_data, task["output"])
     return {"reward": reward, "task_id": task_id}
 
 
